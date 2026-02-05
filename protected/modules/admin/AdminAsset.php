@@ -4,7 +4,8 @@ namespace app\modules\admin;
 
 use yii\web\AssetBundle;
 
-class AdminAsset extends AssetBundle {
+class AdminAsset extends AssetBundle
+{
 
     public $sourcePath = '@app/modules/admin/assets';
     public $css = [
@@ -26,8 +27,10 @@ class AdminAsset extends AssetBundle {
     public $js = [
         'js/libs/modernizr.js',
         'js/libs/alertify.js',
+        'js/libs/apexcharts.js',
         'js/libs/js.cookie.js',
         'js/libs/jquery.ajaxq.js',
+        'js/libs/apexcharts.js',
         'js/libs/jquery.rowgrid.js',
         'js/libs/jquery.autosize.js',
         'js/libs/jquery.redactor.js',
@@ -46,5 +49,4 @@ class AdminAsset extends AssetBundle {
         'forceCopy'
         => true
     ];
-
 }

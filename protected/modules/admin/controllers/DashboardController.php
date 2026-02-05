@@ -6,7 +6,7 @@ use app\models\ContactRequest;
 use app\modules\admin\components\Controller;
 use app\modules\admin\models\ContactRequestSearch;
 use Yii;
-use yii\web\NotFoundHttpException;
+use app\modules\admin\models\OrderSearch;
 
 class DashboardController extends Controller
 {
@@ -20,8 +20,13 @@ class DashboardController extends Controller
 
     public function actionIndex()
     {
-      
 
-        return $this->render('index');
+        $searchModel = new OrderSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+        return $this->render('index', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
     }
 }

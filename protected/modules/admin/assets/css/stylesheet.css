@@ -968,10 +968,92 @@ html.has-flexible-library body {
     border-radius: 6px;
     cursor: pointer;
 }
-.import_submit {
-    
-}
+
+.import_submit {}
+
 .upload-content button:hover,
 .import_submit:hover {
     background: #3730a3;
+}
+
+.dashboard_header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.dashboard_buttons .custom_button {
+    margin-left: 10px;
+}
+
+.custom_button {
+    padding: 8px 10px;
+    background-color: #fff;
+    border-radius: 5px;
+    display: inline-block;
+    color: #23282d
+}
+
+.custom_button.blue {
+    background-color: #0073aa;
+    color: #fff
+}
+
+.dashboard_grids {
+    display: flex;
+    flex-direction: row;
+    margin: 20px -10px 0;
+}
+
+.dashboard_grid {
+    width: 25%;
+    padding: 0 10px;
+}
+
+.dashboard_grid_inner {
+    background-color: #fff;
+    border-radius: 10px;
+    padding: 10px
+}
+
+.dashboard_grid_inner .grid-view {
+    margin-top: 20px;
+}
+
+.grid_title {
+    font-size: 14px;
+    position: relative;
+}
+
+.grid_title i {
+    position: absolute;
+    top: 50%;
+    right: 0;
+    transform: translateY(-50%);
+}
+
+.grid_amount {
+    font-size: 25px;
+    font-weight: 600;
+    margin-top: 10px;
+}
+
+.grid_amount+.grid_title {
+    margin-top: 10px;
+}
+
+.dashboard_chats {
+    display: flex;
+    flex-direction: row;
+    margin: 20px -10px 0;
+}
+
+.sales_order {
+    width: 66.66%;
+    padding: 0 10px
+}
+
+.categories {
+    width: 33.33%;
+    padding: 0 10px
 }
