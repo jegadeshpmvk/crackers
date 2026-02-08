@@ -51,7 +51,10 @@ class PageController extends ApiController
         } elseif ($sort == "high_to_low") {
             $query->orderBy(['price' => SORT_DESC]);
         } elseif ($sort == "latest") {
-            $query->orderBy(['id' => SORT_DESC]);
+            $query->orderBy(new Expression("
+            CAST(REGEXP_SUBSTR(alignment, '^[0-9]+') AS UNSIGNED) ASC,
+            REGEXP_SUBSTR(alignment, '[A-Za-z]+$') ASC
+        "));
         }
 
         return $query->all();
