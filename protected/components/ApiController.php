@@ -9,26 +9,38 @@ use yii\widgets\ActiveForm;
 use yii\filters\AccessControl;
 use yii\filters\auth\HttpBearerAuth;
 
-class ApiController extends \yii\rest\Controller {
-
+class ApiController extends \yii\rest\Controller
+{
     public $_user = false;
 
-    public function behaviors() {
+    public function behaviors()
+    {
         return [
             'authenticator' => [
                 'class' => HttpBearerAuth::className(),
             ],
             'access' => [
                 'class' => AccessControl::className(),
-                
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'roles' => ['@'],
+                        'matchCallback' => function ($rule, $action) {
+                            $this->_user = Yii::$app->user->identity;
+                            $_POST['logged_in_user'] = $this->_user->id;
+                            return true;
+                        }
+                    ]
+                ],
             ]
         ];
     }
 
-    public function beforeAction($action) {
+    public function beforeAction($action)
+    {
         //Set response type as JSON
         Yii::$app->response->format = Response::FORMAT_JSON;
-      
+
         if (Yii::$app->getRequest()->getMethod() === 'OPTIONS') {
             throw new HttpException(204, 'Options request');
             exit;
@@ -37,7 +49,8 @@ class ApiController extends \yii\rest\Controller {
         return parent::beforeAction($action);
     }
 
-    public function assignFields($list, $type = "POST") {
+    public function assignFields($list, $type = "POST")
+    {
         $data = [];
 
         if ($type === "POST" && Yii::$app->request->isPost) {
@@ -47,8 +60,7 @@ class ApiController extends \yii\rest\Controller {
                     $val = trim($val);
                 $data[$l] = $val;
             }
-        }
-        else if ($type === "PATCH") {
+        } else if ($type === "PATCH") {
             foreach ($list as $l) {
                 $val = @Yii::$app->request->getBodyParam($l);
                 if (is_string($val))
@@ -59,9 +71,9 @@ class ApiController extends \yii\rest\Controller {
         return $data;
     }
 
-    public function validationError($model) {
+    public function validationError($model)
+    {
         Yii::$app->response->statusCode = 400;
         return ActiveForm::validate($model);
     }
-
 }

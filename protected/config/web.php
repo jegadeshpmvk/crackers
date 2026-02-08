@@ -129,10 +129,9 @@ $config = [
                 'dashboard' => 'dashboard/index',
                 '<action:(account-details|plans|contact-us|fii-dii|intraday-setups|positional-setups|market-pulse|get-fii-historical|get-market-pulse|options-board|options-board-data|options-board-history-data|futures-board|futures-board-data)>' => 'dashboard/<action>',
                 '<action:(update-profile)>/<id:.+>' => 'dashboard/<action>',
-                [
-                    'class' => 'app\components\CustomPageUrlRule',
-                ],
-                'OPTIONS,POST <action:(web-hooks)>' => 'v1/default/<action>',
+                //API Page
+                'OPTIONS,GET v1/<action:(header-footer|get-categories|get-products)>' => 'v1/page/<action>',
+                'OPTIONS,POST v1/<action:(get-coupon)>' => 'v1/page/<action>',
             ],
         ],
         'log' => [

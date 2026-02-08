@@ -38,6 +38,22 @@ class Product extends ActiveRecord
         return ArrayHelper::merge(parent::rules(), $rules);
     }
 
+    public function fields()
+    {
+        $fields = [
+            'id' => 'id',
+            'name' => 'name',
+            'tamil_name' => 'tamil_name',
+            'price' => 'price',
+            'category' => 'category',
+            'mrp' => 'mrp',
+            'type' => 'type',
+            'alignment' => 'alignment',
+            'images' => 'images',
+        ];
+        return ArrayHelper::merge($fields);
+    }
+
     public function getCategory()
     {
         return $this->hasOne(Category::className(), ['id' => 'category_id']);

@@ -23,6 +23,7 @@ else
 </ul>
 <ul class="nav">
     <li<?php if ($tab == 'user') echo ' class="active"'; ?>><?= Html::a('<span>Admin</span>', ['user/index'], ['class' => 'fa fa-address-book']) ?></li>
+
 </ul>
 <ul class="nav">
     <li<?php if ($tab == 'shop-settings') echo ' class="active"'; ?> title="Header Footer"><?= Html::a('<span>Shop Settings</span>', ['shop-settings/index'], ['class' => 'fa fa-briefcase']) ?></li>
