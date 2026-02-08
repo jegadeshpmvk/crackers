@@ -25,7 +25,8 @@ class Category extends ActiveRecord
     public function rules()
     {
         $rules = [
-            [['name', 'discount',  'order'], 'required']
+            [['name', 'discount'], 'required'],
+            [['order'], 'safe']
         ];
         return ArrayHelper::merge(parent::rules(), $rules);
     }
