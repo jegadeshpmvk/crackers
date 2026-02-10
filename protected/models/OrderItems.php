@@ -6,7 +6,7 @@ use Yii;
 use yii\helpers\ArrayHelper;
 
 
-class Order extends ActiveRecord
+class OrderItems extends ActiveRecord
 {
 
     public static function tableName()
@@ -21,6 +21,10 @@ class Order extends ActiveRecord
             [[
                 'order_id',
                 'product_id',
+                'product_name',
+                'mrp',
+                'code',
+                'price',
                 'quantity',
                 'total_price'
             ], 'safe']

@@ -14,6 +14,7 @@ $form = ActiveForm::begin();
             <div class="_2divs">
                 <?= $form->field($model, 'name')->textInput(['required' => 'required', 'maxlength' => 255]) ?>
                 <?= $form->field($model, 'discount')->textInput(['maxlength' => 255]) ?>
+                <?= $form->field($model, 'alignment')->textInput(['required' => 'required', 'maxlength' => 5]); ?>
             </div>
         </div>
     </div>

@@ -5,25 +5,25 @@ use app\extended\GridView;
 ?>
 <div class="options">
     <?= Html::a('<span>Export as Excel</span>', ['export-excel'], ['class' => 'fa fa-table', 'target' => '_blank']) ?>
-    <?= Html::a('<span>Import as Excel</span>', ['#'], ['class' => 'fa fa-table import_model', 'data-title' => 'Import Category Details',]) ?>
-
-    <?= Html::a('Add New Category', ['category/create'], ['class' => 'fa fa-plus']) ?>
+    <?= Html::a('Add New Delivery', ['delivery/create'], ['class' => 'fa fa-plus']) ?>
     <?= Html::a('<span>Search</span>', NULL, ['class' => 'fa fa-search']) ?>
-    <?= Html::a('<span>Sort</span>', ['default/order', 'name' => 'Category'], ['class' => 'fa fa-reorder btn']) ?>
 </div>
-<h1 class="p-tl">Category</h1>
+<h1 class="p-tl">Delivery</h1>
 <?=
 GridView::widget([
     'dataProvider' => $dataProvider,
     'columns' => [
         [
-            'attribute' => 'name'
+            'attribute' => 'name',
+            'label' => 'State Name',
         ],
         [
-            'attribute' => 'discount'
+            'attribute' => 'packing_charges',
+            'label' => 'Packing Charges',
         ],
         [
-            'attribute' => 'alignment'
+            'attribute' => 'min_order',
+            'label' => 'Minimum Order',
         ],
         [
             'attribute' => 'created_at',

@@ -43,6 +43,7 @@ $form = ActiveForm::begin();
             <div class="_2divs">
                 <?= $form->field($model, 'video_url')->textInput(); ?>
                 <?= $form->field($model, 'alignment')->textInput(['required' => 'required', 'maxlength' => 5]); ?>
+                <?= $form->field($model, 'code')->textInput(['required' => 'required']); ?>
             </div>
         </div>
     </div>

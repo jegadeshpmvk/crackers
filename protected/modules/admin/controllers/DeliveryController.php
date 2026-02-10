@@ -2,18 +2,18 @@
 
 namespace app\modules\admin\controllers;
 
-use app\models\Category;
+use app\models\Delivery;
 use app\modules\admin\components\Controller;
-use app\modules\admin\models\CategorySearch;
+use app\modules\admin\models\DeliverySearch;
 use Yii;
 use yii\web\UploadedFile;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 use yii\web\NotFoundHttpException;
 
-class CategoryController extends Controller
+class DeliveryController extends Controller
 {
 
-    public $tab = "category";
+    public $tab = "delivery";
 
     public function behaviors()
     {
@@ -22,7 +22,7 @@ class CategoryController extends Controller
 
     public function actionIndex()
     {
-        $searchModel = new CategorySearch();
+        $searchModel = new DeliverySearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -36,7 +36,7 @@ class CategoryController extends Controller
         if ($model->load(Yii::$app->request->post())) {
 
             if ($model->save()) {
-                Yii::$app->session->setFlash('success', 'Category details were saved successfully.');
+                Yii::$app->session->setFlash('success', 'Delivery details were saved successfully.');
                 return $this->redirectCheck(['index']);
             } else {
                 Yii::$app->session->setFlash('error', "Please fix the errors.");
@@ -50,7 +50,7 @@ class CategoryController extends Controller
 
     public function actionCreate()
     {
-        $model = new Category();
+        $model = new Delivery();
         $model->saveType = 'created';
         return $this->renderForm($model);
     }
@@ -77,7 +77,7 @@ class CategoryController extends Controller
 
     protected function findModel($id)
     {
-        if (($model = Category::findOne($id)) !== null) {
+        if (($model = Delivery::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The request page does not exist.');
@@ -86,75 +86,23 @@ class CategoryController extends Controller
 
     public function actionExportExcel()
     {
-        $cells[] = ["Id", "Name", "Discount", "Alignment", "Created at"];
+        $cells[] = ["Id", "Name", "Packageing Charges",  "Minimum Order", "Created at"];
 
-        $Category = Category::find()->select(['id'])->all();
-        if (count($Category) > 0) {
-            foreach (Category::find()->each(10) as $m) {
+        $delivery = Delivery::find()->select(['id'])->all();
+        if (count($delivery) > 0) {
+            foreach (Delivery::find()->each(10) as $m) {
                 $createdAt = $m->created_at != "" ? date("M d, Y g:i:s A", $m->created_at) : "";
 
                 $arr = [];
                 $arr[] = $m->id;
                 $arr[] = $m->name;
+                $arr[] = $m->code;
                 $arr[] = $m->discount;
-                $arr[] = $m->alignment;
                 $arr[] = $createdAt;
                 $cells[] = $arr;
             }
         }
-        $fname = 'Category_' . date('d_m_Y_H_i_s');
+        $fname = 'Delivery_' . date('d_m_Y_H_i_s');
         Yii::$app->function->createSpreadSheet($cells, $fname, false);
-    }
-
-
-    public function actionImportExcel()
-    {
-        $file = UploadedFile::getInstanceByName('excel_file');
-
-        if (!$file) {
-            return $this->asJson(['status' => false, 'message' => 'No file uploaded']);
-        }
-
-        $spreadsheet = IOFactory::load($file->tempName);
-        $sheetData = $spreadsheet->getActiveSheet()->toArray();
-
-        // Remove header row
-        unset($sheetData[0]);
-
-        $success = 0;
-        $failed = 0;
-
-        foreach ($sheetData as $row) {
-
-            if (empty($row[2])) { // Name column
-                $failed++;
-                continue;
-            }
-
-            // Update or Create
-            $model = !empty($row[0]) ? Category::findOne($row[0]) : new Category();
-
-
-            $model->name = trim((string)$row[1] ?? '');
-            $model->discount = trim((string)$row[2] ?? '');
-
-            if ($model->isNewRecord) {
-                $model->created_at = time();
-            }
-
-            $model->updated_at = time();
-
-            if ($model->save(false)) {
-                $success++;
-            } else {
-                $failed++;
-            }
-        }
-
-        return $this->asJson([
-            'status' => true,
-            'success' => $success,
-            'failed' => $failed
-        ]);
     }
 }

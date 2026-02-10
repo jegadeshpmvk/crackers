@@ -15,8 +15,25 @@ class ShopSettings extends ActiveRecord
     public function rules()
     {
         $rules = [
-            [['copyrights'], 'required'],
-            [['header_menu', 'footer_menu', 'text', 'email', 'social_media', 'logo_id', 'banner_ids'], 'safe']
+            [['copyrights', 'shop_name', 'shop_code', 'min_order', 'bill_discount'], 'required'],
+            [[
+                'header_menu',
+                'footer_menu',
+                'text',
+                'email',
+                'social_media',
+                'bank_details',
+                'logo_id',
+                'banner_ids',
+                'whatsapp_number',
+                'mobile_number',
+                'alternate_mobile_mumber',
+                'email_id',
+                'google_map_loaction',
+                'google_map_embeed',
+                'address',
+                'gst_no'
+            ], 'safe']
         ];
         return ArrayHelper::merge(parent::rules(), $rules);
     }
@@ -26,6 +43,7 @@ class ShopSettings extends ActiveRecord
         $this->header_menu = json_encode($this->header_menu);
         $this->footer_menu = json_encode($this->footer_menu);
         $this->social_media = json_encode($this->social_media);
+        $this->bank_details = json_encode($this->bank_details);
         $this->banner_ids = json_encode($this->banner_ids);
         return parent::beforeSave($insert);
     }
@@ -35,6 +53,9 @@ class ShopSettings extends ActiveRecord
         $this->header_menu = json_decode($this->header_menu, true);
         $this->footer_menu = json_decode($this->footer_menu, true);
         $this->social_media = json_decode($this->social_media, true);
+        if ($this->bank_details) {
+            $this->bank_details = json_decode($this->bank_details, true);
+        }
         if ($this->banner_ids) {
             $this->banner_ids = json_decode($this->banner_ids, true);
         }

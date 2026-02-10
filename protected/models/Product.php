@@ -32,9 +32,9 @@ class Product extends ActiveRecord
     public function rules()
     {
         $rules = [
-            [['category_id', 'name', 'tamil_name', 'price', 'mrp', 'type', 'alignment'], 'required'],
+            [['category_id', 'name', 'tamil_name', 'price', 'mrp', 'type', 'alignment', 'code'], 'required'],
             [['video_url',  'image_ids'], 'safe'],
-            [['alignment'], 'unique']
+            [['alignment', 'code'], 'unique']
         ];
         return ArrayHelper::merge(parent::rules(), $rules);
     }

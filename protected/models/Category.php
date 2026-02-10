@@ -3,6 +3,7 @@
 namespace app\models;
 
 use Yii;
+use yii\db\Expression;
 use yii\helpers\ArrayHelper;
 
 
@@ -19,14 +20,21 @@ class Category extends ActiveRecord
         // Parent find() returns the custom Scope
         $query = parent::find();
 
-        return $query->orderBy('order');
+        // Apply complex ORDER BY on 'name'
+        $query->orderBy(new Expression("
+            CAST(REGEXP_SUBSTR(alignment, '^[0-9]+') AS UNSIGNED) ASC,
+            REGEXP_SUBSTR(alignment, '[A-Za-z]+$') ASC
+        "));
+
+        return $query;
     }
 
     public function rules()
     {
         $rules = [
-            [['name', 'discount'], 'required'],
-            [['order'], 'safe']
+            [['name', 'discount', 'alignment'], 'required'],
+            [['order'], 'safe'],
+            [['alignment'], 'unique']
         ];
         return ArrayHelper::merge(parent::rules(), $rules);
     }

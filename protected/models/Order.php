@@ -27,9 +27,11 @@ class Order extends ActiveRecord
                 'email',
                 'address',
                 'refer',
+                'state',
                 'total',
                 'packing_charge',
                 'promotion_discount',
+                'promotion_discount_id',
                 'final_total',
                 'order_status'
             ], 'safe']
@@ -44,8 +46,8 @@ class Order extends ActiveRecord
     //     return parent::beforeSave($insert);
     // }
 
-    public function getProfileImage()
+    public function getOrderItems()
     {
-        return $this->hasMany(OrderItems::className(), ['order_id' => $this->id]);
+        return $this->hasMany(OrderItems::className(), ['order_id' => 'id']);
     }
 }
